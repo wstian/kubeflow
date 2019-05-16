@@ -132,23 +132,28 @@ RUN pip install --upgrade pip==19.0.1 && \
     && conda clean -tipsy
 
 # NB: the COPY chown can't expand a bash variable for NB_USER
-COPY --chown=work:users requirements.txt /tmp
+COPY requirements.txt /tmp
+RUN chown work:users /tmp/requirements.txt 
 
 # Install python2 and ipython2 kernel for jupyter notebook
 # Install tf packages which only support py2
-COPY --chown=work:users install.sh /tmp/
+COPY install.sh /tmp/
+RUN chown work:users /tmp/install.sh 
 RUN chmod a+rx /tmp/install.sh && \
     /tmp/install.sh
 
 # Add basic config
-COPY --chown=work:users  jupyter_notebook_config.py /tmp
+COPY jupyter_notebook_config.py /tmp
+RUN chown work:users  /tmp/jupyter_notebook_config.py 
 
 # Wipe $HOME for PVC detection later
 WORKDIR $HOME
 RUN rm -fr $(ls -A $HOME)
 
 # Copy over init scripts
-COPY --chown=work:users  pvc-check.sh /usr/local/bin/
+# COPY --chown=work:users  pvc-check.sh /usr/local/bin/
+COPY pvc-check.sh /usr/local/bin/
+RUN chown -R work:users  /usr/local/bin/pvc-check.sh
 RUN chmod a+rx /usr/local/bin/*
 
 RUN docker-credential-gcr configure-docker && chown work:users $HOME/.docker/config.json

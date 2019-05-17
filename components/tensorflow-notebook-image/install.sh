@@ -11,8 +11,8 @@ pip install --upgrade pip==19.0.1
 pip --no-cache-dir install \
   ipykernel \
   ${TF_PACKAGE_PY_27} \
-  tensorflow-transform \
-  tensorflow-serving-api===${TF_SERVING_VERSION}
+  tensorflow-transform 
+  # tensorflow-serving-api===${TF_SERVING_VERSION}
 
 python -m ipykernel install
 
@@ -37,7 +37,7 @@ fi
 # TODO a quick fix for tensorflow_serving_api when install gpu
 # https://github.com/tensorflow/serving/issues/1142
 # now the dep in tensorflow can meet the require of tensorflow-serving-api but not ensure future
-pip install --no-cache-dir --no-deps tensorflow-serving-api
+# pip install --no-cache-dir --no-deps tensorflow-serving-api
 
 # Install jupyterlab-manager
 # nodejs required for jupyterlab-manager

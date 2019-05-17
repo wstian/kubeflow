@@ -142,6 +142,11 @@ RUN chown work:users /tmp/install.sh
 RUN chmod a+rx /tmp/install.sh && \
     /tmp/install.sh
 
+RUN conda install --quiet --yes nodejs
+RUN jupyter labextension install @jupyterlab/hub-extension
+RUN jupyter labextension install jupyterlab_tensorboard
+RUN pip install jupyter-tensorboard
+
 # Add basic config
 COPY jupyter_notebook_config.py /tmp
 RUN chown work:users  /tmp/jupyter_notebook_config.py 
